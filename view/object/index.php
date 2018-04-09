@@ -27,8 +27,34 @@ and open the template in the editor.
         <script src="js/bootstrap.js"></script>
     </head>
     <body>
-        
-        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form class="form-horizontal">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-8 bg-primary myMax mt-5 p-3">
+                                    <h1 class="text-center p-3 pb-4"><span style="border-bottom: 2px solid black;padding-bottom: 5px;">Process Xlsx/Csv</span></h1>
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <label for="file" class="col-sm-2 col-form-label">Input File</label>
+                                            <div class="col-sm-6 input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" name="fileCk" id="fileCk" placeholder="choose file"/>
+                                                    <label class="custom-file-label">choose file</label>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-4 col-form-label"><span class="errFile">eg: only .xlsx or csv file</span></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script src="js/xlsxCsvProcess.js"></script>
     </body>
 </html>
