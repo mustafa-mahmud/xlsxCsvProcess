@@ -44,9 +44,77 @@ and open the template in the editor.
                                                     <label class="custom-file-label">choose file</label>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-4 col-form-label"><span class="errFile">eg: only .xlsx or csv file</span></label>
+                                            <label class="col-sm-4 col-form-label">
+                                                <span class="errFile">eg: only .xlsx or csv file</span>
+                                            </label>
                                         </div>
                                     </div>
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <label for="column" class="col-sm-2 col-form-label">Column</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="column" name="column" placeholder="A/B/D" />
+                                            </div>
+                                            <label class="col-sm-4 col-form-label">
+                                                <span class="errCol">eg: one column -A,B,E etc</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <label for="row" class="col-sm-2 col-form-label">Row Range</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="row" id="row" placeholder="A1-A15,B5-50" />
+                                            </div>
+                                            <label class="col-sm-4 col-form-label">
+                                                <span class="errRow">eg: only one column row</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <label for="symbol" class="col-sm-2 col-form-label">Copy</label>
+                                            <div class="col-sm-3">
+                                                <select class="form-control">
+                                                    <option value="null" selected="selected">symbol</option>
+                                                    <option value="1">|</option>
+                                                    <option value="2">!</option>
+                                                    <option value="3">@</option>
+                                                    <option value="4">#</option>
+                                                    <option value="5">$</option>
+                                                    <option value="6">%</option>
+                                                    <option value="7">/</option>
+                                                    <option value="8">*</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <select class="form-control">
+                                                    <option value="null" selected="selected">where from</option>
+                                                    <option value="before">before</option>
+                                                    <option value="after">after</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-sm-12">
+                                        <div class="row">
+                                            <label for="delete" class="col-sm-2 col-form-label">Delete</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control">
+                                                    <option value="null" selected="selected">symbol</option>
+                                                    <option value="1del">|</option>
+                                                    <option value="2del">!</option>
+                                                    <option value="3del">@</option>
+                                                    <option value="4del">#</option>
+                                                    <option value="5del">$</option>
+                                                    <option value="6del">%</option>
+                                                    <option value="7del">/</option>
+                                                    <option value="8del">*</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="text-center col-sm-10"><button class="pl-5 pr-5 btn btn-dark btn-md">Save</button></h1>
                                 </div>
                             </div>
                         </div>
