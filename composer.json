@@ -3,5 +3,8 @@
         "psr-4":{
             "xlsxCsv\\":"src"
         }
+    },
+    "require":{
+        "phpoffice/phpspreadsheet":"1.2.0"
     }
 }
