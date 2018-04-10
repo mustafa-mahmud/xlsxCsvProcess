@@ -30,11 +30,11 @@ and open the template in the editor.
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <form class="form-horizontal">
+                    <form id="xlsxProcess" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-lg-8 bg-primary myMax mt-5 p-3">
-                                    <h1 class="text-center p-3 pb-4"><span style="border-bottom: 2px solid black;padding-bottom: 5px;">Process Xlsx/Csv</span></h1>
+                                    <h1 class="text-center p-3 pb-4"><span style="border-bottom: 2px solid black;padding-bottom: 5px;">Process Xlsx</span></h1>
                                     <div class="form-group col-lg-12">
                                         <div class="row">
                                             <label for="file" class="col-lg-2 col-form-label">Upload File</label>
@@ -45,78 +45,57 @@ and open the template in the editor.
                                                 </div>
                                             </div>
                                             <label class="col-lg-4 col-form-label">
-                                                <span class="errFile">eg: only .xlsx or csv file</span>
+                                                <span class="errFile">eg: only .xlsx file allowed</span>
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="column" class="col-lg-2 col-form-label">Column</label>
+                                            <label for="choose" class="col-lg-2 col-form-label">Select Plan</label>
                                             <div class="col-lg-6">
-                                                <input type="text" class="form-control" id="column" name="column" placeholder="A/B/D" />
+                                                <select name="plan" class="form-control">
+                                                    <option value="null" selected="selected">select bellow</option>
+                                                    <option value="split">split</option>
+                                                    <option value="add">add</option>
+                                                </select>
+                                            </div>
+                                            <label class="col-lg-4 col-form-label">eg: select must any one</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-lg-12 split">
+                                        <div class="row">
+                                            <label for="split" class="col-lg-2 col-form-label">Split</label>
+                                            <div class="col-lg-4">
+                                                <input type="text" class="form-control" id="splitFirstCol" name="splitFirstCol" placeholder="A/B/D" />
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <input type="text" class="form-control" id="splitSecondCol" name="splitSecondCol" placeholder="space" />
                                             </div>
                                             <label class="col-lg-4 col-form-label">
-                                                <span class="errCol">eg: one column -A,B,E etc</span>
+                                                <span class="errSplitCol">eg: one column name where | </span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-lg-12">
+                                    <div class="form-group col-lg-12 add">
                                         <div class="row">
-                                            <label for="row" class="col-lg-2 col-form-label">Row Range</label>
-                                            <div class="col-lg-6">
-                                                <input type="text" class="form-control" name="row" id="row" placeholder="A1-A15,B5-50" />
+                                            <label for="column" class="col-lg-2 col-form-label">Add</label>
+                                            <div class="col-lg-2">
+                                                <input type="text" class="form-control" id="addFirstCol" name="addFirstCol" placeholder="A/B/D" />
+                                            </div>
+                                            <div class="col-lg-2 text-center">
+                                                <input type="text" class="form-control" id="addSecondCol" name="addSecondCol" placeholder="space">
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <input type="text" class="form-control" id="addThirdCol" name="addThirdCol" placeholder="A/B/D" />
                                             </div>
                                             <label class="col-lg-4 col-form-label">
-                                                <span class="errRow">eg: only one column row</span>
+                                                <span class="errAddCol">eg: one column name with | </span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-lg-12">
-                                        <div class="row">
-                                            <label for="symbol" class="col-lg-2 col-form-label">Copy</label>
-                                            <div class="col-lg-3">
-                                                <select class="form-control">
-                                                    <option value="null" selected="selected">symbol</option>
-                                                    <option value="1">|</option>
-                                                    <option value="2">!</option>
-                                                    <option value="3">@</option>
-                                                    <option value="4">#</option>
-                                                    <option value="5">$</option>
-                                                    <option value="6">%</option>
-                                                    <option value="7">/</option>
-                                                    <option value="8">*</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-3">
-                                                <select class="form-control">
-                                                    <option value="null" selected="selected">where from</option>
-                                                    <option value="before">before</option>
-                                                    <option value="after">after</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-lg-12">
-                                        <div class="row">
-                                            <label for="delete" class="col-lg-2 col-form-label">Delete</label>
-                                            <div class="col-lg-6">
-                                                <select class="form-control">
-                                                    <option value="null" selected="selected">symbol</option>
-                                                    <option value="1del">|</option>
-                                                    <option value="2del">!</option>
-                                                    <option value="3del">@</option>
-                                                    <option value="4del">#</option>
-                                                    <option value="5del">$</option>
-                                                    <option value="6del">%</option>
-                                                    <option value="7del">/</option>
-                                                    <option value="8del">*</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="errProcess text-center col-lg-10 mb-2">Sorry something wrong, check your data format</p>
+                                    <p class="errProcess text-center col-lg-10 mb-3">Sorry something wrong, check your data format</p>
                                     <h1 class="text-center col-lg-10">
-                                        <button class="pl-5 pr-5 btn btn-dark btn-md">Save</button>
+                                        <button class="pl-5 pr-5 btn btn-dark btn-md save">Save</button>
                                         <button class="pl-5 pr-5 btn btn-danger btn-md download">Download</button>
                                     </h1>
                                 </div>
@@ -124,6 +103,7 @@ and open the template in the editor.
                         </div>
                     </form>
                 </div>
+                <p id="demo"></p>
             </div>
         </div>
 

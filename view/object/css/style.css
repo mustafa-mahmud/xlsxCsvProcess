@@ -10,6 +10,12 @@ h1 span{
     font: 25px fantasy;
 }
 
-.errProcess , .download{
+.errProcess {
+    display: none ;
+}
+.download{
     display: none !important;
+}
+.split , .add{
+    display: none;
 }
