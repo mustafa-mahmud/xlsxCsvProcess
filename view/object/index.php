@@ -29,52 +29,52 @@ and open the template in the editor.
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-lg-12">
                     <form class="form-horizontal">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-sm-8 bg-primary myMax mt-5 p-3">
+                                <div class="col-lg-8 bg-primary myMax mt-5 p-3">
                                     <h1 class="text-center p-3 pb-4"><span style="border-bottom: 2px solid black;padding-bottom: 5px;">Process Xlsx/Csv</span></h1>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="file" class="col-sm-2 col-form-label">Input File</label>
-                                            <div class="col-sm-6 input-group">
+                                            <label for="file" class="col-lg-2 col-form-label">Upload File</label>
+                                            <div class="col-lg-6 input-group">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" name="fileCk" id="fileCk" placeholder="choose file"/>
                                                     <label class="custom-file-label">choose file</label>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-4 col-form-label">
+                                            <label class="col-lg-4 col-form-label">
                                                 <span class="errFile">eg: only .xlsx or csv file</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="column" class="col-sm-2 col-form-label">Column</label>
-                                            <div class="col-sm-6">
+                                            <label for="column" class="col-lg-2 col-form-label">Column</label>
+                                            <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="column" name="column" placeholder="A/B/D" />
                                             </div>
-                                            <label class="col-sm-4 col-form-label">
+                                            <label class="col-lg-4 col-form-label">
                                                 <span class="errCol">eg: one column -A,B,E etc</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="row" class="col-sm-2 col-form-label">Row Range</label>
-                                            <div class="col-sm-6">
+                                            <label for="row" class="col-lg-2 col-form-label">Row Range</label>
+                                            <div class="col-lg-6">
                                                 <input type="text" class="form-control" name="row" id="row" placeholder="A1-A15,B5-50" />
                                             </div>
-                                            <label class="col-sm-4 col-form-label">
+                                            <label class="col-lg-4 col-form-label">
                                                 <span class="errRow">eg: only one column row</span>
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="symbol" class="col-sm-2 col-form-label">Copy</label>
-                                            <div class="col-sm-3">
+                                            <label for="symbol" class="col-lg-2 col-form-label">Copy</label>
+                                            <div class="col-lg-3">
                                                 <select class="form-control">
                                                     <option value="null" selected="selected">symbol</option>
                                                     <option value="1">|</option>
@@ -87,7 +87,7 @@ and open the template in the editor.
                                                     <option value="8">*</option>
                                                 </select>
                                             </div>
-                                            <div class="col-sm-3">
+                                            <div class="col-lg-3">
                                                 <select class="form-control">
                                                     <option value="null" selected="selected">where from</option>
                                                     <option value="before">before</option>
@@ -96,10 +96,10 @@ and open the template in the editor.
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group col-sm-12">
+                                    <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="delete" class="col-sm-2 col-form-label">Delete</label>
-                                            <div class="col-sm-6">
+                                            <label for="delete" class="col-lg-2 col-form-label">Delete</label>
+                                            <div class="col-lg-6">
                                                 <select class="form-control">
                                                     <option value="null" selected="selected">symbol</option>
                                                     <option value="1del">|</option>
@@ -114,7 +114,11 @@ and open the template in the editor.
                                             </div>
                                         </div>
                                     </div>
-                                    <h1 class="text-center col-sm-10"><button class="pl-5 pr-5 btn btn-dark btn-md">Save</button></h1>
+                                    <p class="errProcess text-center col-lg-10 mb-2">Sorry something wrong, check your data format</p>
+                                    <h1 class="text-center col-lg-10">
+                                        <button class="pl-5 pr-5 btn btn-dark btn-md">Save</button>
+                                        <button class="pl-5 pr-5 btn btn-danger btn-md download">Download</button>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
