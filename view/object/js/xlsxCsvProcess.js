@@ -50,7 +50,6 @@
                 else{
                     $(".errAddCol").text("eg: please any Column A-Z").css({"color": "red"});
                 }
-                console.log("add");
             } else {
                 $(".errProcess").fadeIn().text("Please select any one plan").css({"color": "red"});
             }
@@ -70,12 +69,23 @@
                 beforeSend:function(){},
                 success:function(data){
                     let patt=/eg: please choose .xlsx file/;
+                    let patt2=/(column no data\(split\))$/;
                     if(patt.test(data)){
+                        console.log("A");
                         $(".errFile").text(data).css({"color":"red"});
+                        return false;
+                    }
+                    else if(patt2.test(data)){
+                        console.log("B");
+                        $(".errSplitCol").text(data).css({"color":"red"});
+                        return false;
                     }
                     else{
                         //success
+                        console.log("C");
+                        $(".errSplitCol").text("eg: one column name where | ").css({"color":"black"});
                         $(".errFile").text("eg: only .xlsx file allowed").css({"color":"black"});
+                        return true;
                     }
                     console.log(data);
                 }
