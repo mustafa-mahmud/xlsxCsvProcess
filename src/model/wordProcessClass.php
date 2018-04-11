@@ -1,25 +1,23 @@
 <?php
 //class wordProcessClass() and class MyReadFilter() have same 'namespace'-'xlsxCsv' 
 namespace xlsxCsv\model;
-
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
-
 class wordProcessClass {
-    public $ckModel="ok all";
-    
+    public $ckReader;
+    public $ckLoader;
+
+
     public function readData($data=""){
         $file=$data["fileCk"]["tmp_name"];
-        $reader= IOFactory::createReader("Xlsx");
-        $spreadsheet=$reader->load($file);
-        $show=$spreadsheet->getActiveSheet()->toArray();// |OK
-//        print_r($show);
+        $this->ckReader= IOFactory::createReader("Xlsx");
+        $this->ckLoader= $this->ckReader->load($file);
     }
     
 }
-
 class MyReadFilter implements IReadFilter{
-    public function readCell($column, $row="", $worksheetName = '') {
-       echo count($column);
+    public function readCell($column, $row, $worksheetName = '') {
+        print_r($column);
+       return true;
     }
 }
