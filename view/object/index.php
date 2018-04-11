@@ -33,69 +33,63 @@ and open the template in the editor.
                     <form id="xlsxProcess" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-8 bg-primary myMax mt-5 p-3">
+                                <div class="col-lg-6 bg-primary myMax mt-5 p-3">
                                     <h1 class="text-center p-3 pb-4"><span style="border-bottom: 2px solid black;padding-bottom: 5px;">Process Xlsx</span></h1>
                                     <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="file" class="col-lg-2 col-form-label">Upload File</label>
-                                            <div class="col-lg-6 input-group">
+                                            <label for="file" class="col-lg-3 col-form-label">Upload File</label>
+                                            <div class="col-lg-9 input-group">
                                                 <div class="custom-file">
                                                     <input type="file" class="custom-file-input" name="fileCk" id="fileCk" placeholder="choose file"/>
                                                     <label class="custom-file-label">choose file</label>
                                                 </div>
                                             </div>
-                                            <label class="col-lg-4 col-form-label">
-                                                <span class="errFile">eg: only .xlsx file allowed</span>
-                                            </label>
+                                            <p class="errFile text-right mr-3">eg: only .xlsx file allowed</p>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-12">
                                         <div class="row">
-                                            <label for="choose" class="col-lg-2 col-form-label">Select Plan</label>
-                                            <div class="col-lg-6">
+                                            <label for="choose" class="col-lg-3 col-form-label">Select Plan</label>
+                                            <div class="col-lg-9">
                                                 <select name="plan" class="form-control">
                                                     <option value="null" selected="selected">select bellow</option>
                                                     <option value="split">split</option>
                                                     <option value="add">add</option>
                                                 </select>
                                             </div>
-                                            <label class="col-lg-4 col-form-label">eg: select must any one</label>
+                                            <p class="errSelect text-right mr-3">eg: select must any one plan</p>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-12 split">
                                         <div class="row">
-                                            <label for="split" class="col-lg-2 col-form-label">Split</label>
-                                            <div class="col-lg-4">
+                                            <label for="split" class="col-lg-3 col-form-label">Split</label>
+                                            <div class="col-lg-6">
                                                 <input type="text" class="form-control" id="splitFirstCol" name="splitFirstCol" placeholder="A/B/D" />
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <input type="text" class="form-control" id="splitSecondCol" name="splitSecondCol" placeholder="space" />
                                             </div>
-                                            <label class="col-lg-4 col-form-label">
-                                                <span class="errSplitCol">eg: one column name where | </span>
-                                            </label>
+                                                <p class="errSplitCol text-right mr-3">eg: one column name </p>
                                         </div>
                                     </div>
                                     <div class="form-group col-lg-12 add">
                                         <div class="row">
-                                            <label for="column" class="col-lg-2 col-form-label">Add</label>
-                                            <div class="col-lg-2">
+                                            <label for="column" class="col-lg-3 col-form-label">Add</label>
+                                            <div class="col-lg-3">
                                                 <input type="text" class="form-control" id="addFirstCol" name="addFirstCol" placeholder="A/B/D" />
                                             </div>
-                                            <div class="col-lg-2 text-center">
+                                            <div class="col-lg-3 text-center">
                                                 <input type="text" class="form-control" id="addSecondCol" name="addSecondCol" placeholder="space">
                                             </div>
-                                            <div class="col-lg-2">
+                                            <div class="col-lg-3">
                                                 <input type="text" class="form-control" id="addThirdCol" name="addThirdCol" placeholder="A/B/D" />
                                             </div>
-                                            <label class="col-lg-4 col-form-label">
-                                                <span class="errAddCol">eg: one column name with | </span>
-                                            </label>
+                                                <p class="errAddCol text-right mr-3">eg: two column name</p>
                                         </div>
                                     </div>
                                     <p class="errProcess text-center col-lg-10 mb-3">Sorry something wrong, check your data format</p>
-                                    <h1 class="text-center col-lg-10">
-                                        <button class="pl-5 pr-5 btn btn-dark btn-md save">Save</button>
+                                    <h1 class="text-right col-lg-12 mr-3">
+                                        <button class="pl-5 pr-5 btn btn-dark btn-md save"><i class="waiting"></i>&nbsp;Save&nbsp;</button>
                                         <button class="pl-5 pr-5 btn btn-danger btn-md download">Download</button>
                                     </h1>
                                 </div>

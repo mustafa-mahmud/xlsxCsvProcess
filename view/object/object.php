@@ -36,13 +36,31 @@ if (isset($_POST) && !empty($_POST)) {
             $splitAdd = ($_POST["plan"] === "split") ? "split" : "add";
 
             if ($splitAdd === "split") {
+                //search user inputed column with all value available column
                 if (array_search(strtoupper($_POST["splitFirstCol"]), $arrValues) !== FALSE) {
                     //remove empty key;
                     $arrSplitFilter = array_filter($_POST);
-                    print_r($arrSplitFilter);
+                    if (array_key_exists("splitSecondCol", $arrSplitFilter)) {
+                        //key available
+                        $splitSymbol = $arrSplitFilter["splitSecondCol"];
+                        //if only character a-zA-z0-9
+                        if (preg_match("/\w/", $splitSymbol) || strlen($splitSymbol) > 1) {
+                            echo "eg: a-z or 0-9 not allowed, only -one symbol!symbolSplit";
+                            return FALSE;
+                        }
+                        else{
+                            //here availabe split 'one symbol'.........
+                        }
+                    }
+                    else {
+                        //here available split 'space'............
+                    }
                 }
-                else{
-                    echo "eg: ".$_POST["splitFirstCol"]. " - column no data(split)";
+                else {//empty column
+                    $array_reduce = array_reduce($arrValues, function($v1, $v2) {
+                        return $v1 . "-" . $v2;
+                    });
+                    echo "eg:" . " only" . ltrim($array_reduce, "-") . " column have value(split)";
                     return FALSE;
                 }
             }
@@ -51,7 +69,7 @@ if (isset($_POST) && !empty($_POST)) {
             }
         }
         else {
-            echo "eg: please choose .xlsx file";
+            echo "eg: sorry someting went wrong !";
         }
     }
 }

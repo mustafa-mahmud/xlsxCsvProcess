@@ -9,13 +9,21 @@
 h1 span{
     font: 25px fantasy;
 }
-
-.errProcess {
-    display: none ;
-}
 .download{
     display: none !important;
 }
 .split , .add{
     display: none;
+}
+[class^="err"]{
+    width: 100%;
+    display: block;
+}
+.errProcess {
+    display: none ;
+}
+.cursorPrevent{
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    display: block;
 }
