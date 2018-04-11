@@ -103,7 +103,7 @@ and open the template in the editor.
                         </div>
                     </form>
                 </div>
-                <p id="demo"></p>
+                <!--<p id="demo"></p>-->
             </div>
         </div>
 
