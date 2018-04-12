@@ -5,23 +5,48 @@ include '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 
+if (isset($_POST["plan"]) && !empty($_POST["plan"])) {
+    $arrUserCol = [];
+    ($_POST["plan"] === "split") ? array_push($arrUserCol, $_POST["splitFirstCol"]) : array_push($arrUserCol, $_POST["addFirstCol"], $_POST["addThirdCol"]);
+}
+
 class MyReadFilter implements IReadFilter {
 
-    public $arrCol = [];
-    public $arrRow = [];
-    public $arrColRow = [];
+    public $userColRow="";
+    public $arrColRowSplit = [];
+    public $arrColRowAdd=array("firstCol"=>array(),"secondCol"=>array());
+    public $dataCol=[];
+
+
+    public function __construct($data="") {
+        $this->userColRow=$data;
+    }
 
     public function readCell($column, $row, $worksheetName = '') {
-        array_push($this->arrCol, $column);
-        array_push($this->arrRow, $row);
-        array_push($this->arrColRow, $column . $row);
+        //all column which have data
+        array_push($this->dataCol, $column);
+        //split- only one column 
+        if(count($this->userColRow)==1){
+            if(strtoupper($this->userColRow[0])===$column){
+                array_push($this->arrColRowSplit, $column.$row);
+            }
+        }
+        //add - two columns
+        else{
+            if(strtoupper($this->userColRow[0])===$column){
+                array_push($this->arrColRowAdd["firstCol"], $column.$row);
+            }
+            if(strtoupper($this->userColRow[1])===$column){
+                array_push($this->arrColRowAdd["secondCol"], $column.$row);
+            }
+        }
         return TRUE;
     }
 
 }
 
 $reader = IOFactory::createReader("Xlsx");
-$filter = new MyReadFilter();
+$filter = new MyReadFilter($arrUserCol);
 
 if (isset($_POST) && !empty($_POST)) {
     if (isset($_FILES) && !empty($_FILES)) {
@@ -33,30 +58,28 @@ if (isset($_POST) && !empty($_POST)) {
             //setReadFilter() method filter the data
             $reader->setReadFilter($filter);
             $spreadsheet = $reader->load($tempName);
-            //remove duplicate value from column 
-            $arrUnique = array_unique($filter->arrCol);
             //sort the array key
-            $arrValues = array_values($arrUnique);
             $splitAdd = ($_POST["plan"] === "split") ? "split" : "add";
-            $userColumn = strtoupper($_POST["splitFirstCol"]);
 
             if ($splitAdd === "split") {
-                //search user inputed column with all value available column
-                if (array_search($userColumn, $arrValues) !== FALSE) {
+                //if usr put Column have data
+                if (count($filter->arrColRowSplit)>0) {
                     //remove empty key;
                     $arrSplitFilter = array_filter($_POST);
                     if (array_key_exists("splitSecondCol", $arrSplitFilter)) {
                         //key available
-                        $splitSymbol = $arrSplitFilter["splitSecondCol"];
-                        //if only character a-zA-z0-9
+                        $splitSymbol = trim($arrSplitFilter["splitSecondCol"]);
+                        //if only character a-zA-z0-9 or upto 1 
                         if (preg_match("/\w/", $splitSymbol) || strlen($splitSymbol) > 1) {
                             echo "eg: a-z or 0-9 not allowed, only -one symbol!symbolSplit";
                             return FALSE;
                         }
                         else {
                             //here availabe split 'one symbol'.........
-                            print_r($filter->arrColRow);
-                            echo "ck";
+                            $len= count($filter->arrColRowSplit);
+                            for($i=0;$i<$len;$i++){
+                                echo $spreadsheet->getActiveSheet()->getCell($filter->arrColRowSplit[$i])->getValue();
+                            }
                         }
                     }
                     else {
@@ -64,11 +87,11 @@ if (isset($_POST) && !empty($_POST)) {
                     }
                 }
                 else {//empty column
-                    $array_reduce = array_reduce($arrValues, function($v1, $v2) {
-                        return $v1 . "-" . $v2;
+                    $array_unique= array_unique($filter->dataCol);
+                    $array_reduce= array_reduce($array_unique, function($v1,$v2){
+                        return $v1."-".$v2;
                     });
-                    echo "eg:" . " only" . ltrim($array_reduce, "-") . " column have value(split)";
-                    return FALSE;
+                    echo "only ".ltrim($array_reduce,"-")." column have value!symbolSplit";
                 }
             }
             if ($splitAdd === "add") {

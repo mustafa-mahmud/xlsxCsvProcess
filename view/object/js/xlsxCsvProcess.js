@@ -95,15 +95,16 @@
                         return false;
                     } else if (data.includes("symbolSplit")) {
                         //replace 'symbolSplit' string and return less string
+                        $("#splitSecondCol").css({"border-color":"red"});
                         $(".errSplitCol").text(data.replace("symbolSplit","")).css({"color":"red"});
                         return false;
                     } else {
                         //success
+                        $("#splitSecondCol").css({"border-color":"#CED4DA"});
                         $(".errProcess").fadeOut();
                         $(".errSplitCol").text("eg: one column name ").css({"color":"black"});
                         return true;
                     }
-                    console.log(data);
                 }
             }
             );
