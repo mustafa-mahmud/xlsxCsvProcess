@@ -7,10 +7,14 @@ use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 
 class MyReadFilter implements IReadFilter {
 
-    public $arr = [];
+    public $arrCol = [];
+    public $arrRow = [];
+    public $arrColRow = [];
 
     public function readCell($column, $row, $worksheetName = '') {
-        array_push($this->arr, $column);
+        array_push($this->arrCol, $column);
+        array_push($this->arrRow, $row);
+        array_push($this->arrColRow, $column . $row);
         return TRUE;
     }
 
@@ -28,16 +32,17 @@ if (isset($_POST) && !empty($_POST)) {
             $tempName = $_FILES["fileCk"]["tmp_name"];
             //setReadFilter() method filter the data
             $reader->setReadFilter($filter);
-            $reader->load($tempName);
+            $spreadsheet = $reader->load($tempName);
             //remove duplicate value from column 
-            $arrUnique = array_unique($filter->arr);
+            $arrUnique = array_unique($filter->arrCol);
             //sort the array key
             $arrValues = array_values($arrUnique);
             $splitAdd = ($_POST["plan"] === "split") ? "split" : "add";
+            $userColumn = strtoupper($_POST["splitFirstCol"]);
 
             if ($splitAdd === "split") {
                 //search user inputed column with all value available column
-                if (array_search(strtoupper($_POST["splitFirstCol"]), $arrValues) !== FALSE) {
+                if (array_search($userColumn, $arrValues) !== FALSE) {
                     //remove empty key;
                     $arrSplitFilter = array_filter($_POST);
                     if (array_key_exists("splitSecondCol", $arrSplitFilter)) {
@@ -48,8 +53,10 @@ if (isset($_POST) && !empty($_POST)) {
                             echo "eg: a-z or 0-9 not allowed, only -one symbol!symbolSplit";
                             return FALSE;
                         }
-                        else{
+                        else {
                             //here availabe split 'one symbol'.........
+                            print_r($filter->arrColRow);
+                            echo "ck";
                         }
                     }
                     else {

@@ -83,6 +83,7 @@
                     $(".save").addClass("cursorPrevent");
                 },
                 success: function (data) {
+                    console.log(data);
                     $(".waiting").removeClass("fas fa-spinner fa-pulse");
                     $(".save").removeClass("cursorPrevent");
                     let patt = /eg: sorry someting went wrong !/;
