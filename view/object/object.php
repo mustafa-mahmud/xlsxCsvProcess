@@ -4,6 +4,7 @@ include '../../vendor/autoload.php';
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_POST["plan"]) && !empty($_POST["plan"])) {
     $arrUserCol = [];
@@ -46,6 +47,7 @@ class MyReadFilter implements IReadFilter {
 
 $reader = IOFactory::createReader("Xlsx");
 $filter = new MyReadFilter($arrUserCol);
+$spreadsheet2=new Spreadsheet();
 
 if (isset($_POST) && !empty($_POST)) {
     if (isset($_FILES) && !empty($_FILES)) {
@@ -54,7 +56,7 @@ if (isset($_POST) && !empty($_POST)) {
         if ($nameProcess === "xlsx") {
             //tem_name for load
             $tempName = $_FILES["fileCk"]["tmp_name"];
-            //setReadFilter() method filter the data
+            //setReadFilter() method for filter the data
             $reader->setReadFilter($filter);
             $spreadsheet = $reader->load($tempName);
             //sort the array key
@@ -67,28 +69,46 @@ if (isset($_POST) && !empty($_POST)) {
                     $arrAllDataSplit = array();
                     $len = count($filter->arrColRowSplit);
                     for ($i = 0; $i < $len; $i++) {
-                        array_push($arrAllDataSplit, $spreadsheet->getActiveSheet()->getCell($filter->arrColRowSplit[$i])->getValue());
+                        array_push($arrAllDataSplit, trim($spreadsheet->getActiveSheet()->getCell($filter->arrColRowSplit[$i])->getValue()));
                     }
                     //remove empty key;
                     $arrSplitFilter = array_filter($_POST);
                     //if user put symbol
                     if (array_key_exists("splitSecondCol", $arrSplitFilter)) {
                         //key available
-                        $splitSymbol = trim($arrSplitFilter["splitSecondCol"]);
+                        $GLOBALS["splitSymbol"] = trim($arrSplitFilter["splitSecondCol"]);
                         //if only character a-zA-z0-9 or upto 1 
-                        if (preg_match("/\w/", $splitSymbol) || strlen($splitSymbol) > 1) {
+                        if (preg_match("/\w/", $GLOBALS["splitSymbol"]) || strlen($GLOBALS["splitSymbol"]) > 1) {
                             echo "eg: a-z or 0-9 not allowed, only -one symbol!symbolSplit";
                             return FALSE;
                         }
                         else {
-                            //here available one symbol.........
+                            //here available one symbol, $GLOBALS["splitSymbol"]=user symbol
+                            //we checking that is symbol in $value?
                             $processSplit= array_map(function($value){
-                                if(strchr($value, "|")!==FALSE){
-                                    return explode("|", $value);
+                                if(strchr($value, $GLOBALS["splitSymbol"])!==FALSE){
+                                    return explode($GLOBALS["splitSymbol"], trim($value));
                                 }
                             }, $arrAllDataSplit);
                             $endProcessSplit= array_values(array_filter($processSplit));
-                            print_r($endProcessSplit);
+                            //if symbol matched and data have
+                            if(count($endProcessSplit)>0){
+//                                print_r($endProcessSplit);
+                                $spreadsheet2->createSheet();
+                                $j=0;
+                                for($i=0;$i<count($endProcessSplit);$i++){
+                                    $j++;
+                                    $spreadsheet2->setActiveSheetIndex(0)->setCellValue("A".$j, $endProcessSplit[$i][0]);
+                                    $spreadsheet2->setActiveSheetIndex(1)->setCellValue("A".$j, $endProcessSplit[$i][1]);
+                                }
+                                $writer= IOFactory::createWriter($spreadsheet2, "Xlsx");
+                                $writer->save("xlsx/create.xlsx");
+                                
+                            }
+                            //if symbol did not match and data nill
+                            else{
+                                echo strtoupper($arrUserCol[0])." column have not that symbole".$GLOBALS["splitSymbol"]."symbolSplit";
+                            }
                         }
                     }
                     //if user not put any symbol then take 'space' default
