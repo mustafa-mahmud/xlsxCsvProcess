@@ -47,7 +47,7 @@ class MyReadFilter implements IReadFilter {
 
 $reader = IOFactory::createReader("Xlsx");
 $filter = new MyReadFilter($arrUserCol);
-$spreadsheet2=new Spreadsheet();
+$spreadsheet2 = new Spreadsheet();
 
 if (isset($_POST) && !empty($_POST)) {
     if (isset($_FILES) && !empty($_FILES)) {
@@ -73,47 +73,53 @@ if (isset($_POST) && !empty($_POST)) {
                     }
                     //remove empty key;
                     $arrSplitFilter = array_filter($_POST);
+                    $symbol = (array_key_exists("splitSecondCol", $arrSplitFilter)) ? $arrSplitFilter["splitSecondCol"] : " ";
                     //if user put symbol
-                    if (array_key_exists("splitSecondCol", $arrSplitFilter)) {
+                    $GLOBALS["splitSymbol"] = "";
+                    if ($symbol !== " ") {
                         //key available
-                        $GLOBALS["splitSymbol"] = trim($arrSplitFilter["splitSecondCol"]);
+                        $GLOBALS["splitSymbol"] = trim($symbol);
                         //if only character a-zA-z0-9 or upto 1 
                         if (preg_match("/\w/", $GLOBALS["splitSymbol"]) || strlen($GLOBALS["splitSymbol"]) > 1) {
                             echo "eg: a-z or 0-9 not allowed, only -one symbol!symbolSplit";
                             return FALSE;
                         }
-                        else {
-                            //here available one symbol, $GLOBALS["splitSymbol"]=user symbol
-                            //we checking that is symbol in $value?
-                            $processSplit= array_map(function($value){
-                                if(strchr($value, $GLOBALS["splitSymbol"])!==FALSE){
-                                    return explode($GLOBALS["splitSymbol"], trim($value));
-                                }
-                            }, $arrAllDataSplit);
-                            $endProcessSplit= array_values(array_filter($processSplit));
-                            //if symbol matched and data have
-                            if(count($endProcessSplit)>0){
-//                                print_r($endProcessSplit);
-                                $spreadsheet2->createSheet();
-                                $j=0;
-                                for($i=0;$i<count($endProcessSplit);$i++){
-                                    $j++;
-                                    $spreadsheet2->setActiveSheetIndex(0)->setCellValue("A".$j, $endProcessSplit[$i][0]);
-                                    $spreadsheet2->setActiveSheetIndex(1)->setCellValue("A".$j, $endProcessSplit[$i][1]);
-                                }
-                                $writer= IOFactory::createWriter($spreadsheet2, "Xlsx");
-                                $writer->save("xlsx/create.xlsx");
-                                
-                            }
-                            //if symbol did not match and data nill
-                            else{
-                                echo strtoupper($arrUserCol[0])." column have not that symbole".$GLOBALS["splitSymbol"]."symbolSplit";
+                    }
+                    //here available one symbol, $GLOBALS["splitSymbol"]=user symbol
+                    //we checking that is symbol in $value?
+                    $processSplit = array_map(function($value) {
+                        if (strlen($GLOBALS["splitSymbol"]) > 0) {
+                            if (strchr($value, $GLOBALS["splitSymbol"]) !== FALSE) {
+                                return explode($GLOBALS["splitSymbol"], trim($value));
                             }
                         }
+                        if (strlen($GLOBALS["splitSymbol"]) === 0) {
+                            if (preg_match("/^[^~!@#$%^&*|]+$/", $value)) {
+                                $substr_count = substr_count($value, " ");
+                                if ($substr_count > 1) {
+                                    $value=preg_replace("/\s+/", " ", $value);
+                                }
+                                return explode(" ", trim($value));
+                            }
+                        }
+                    }, $arrAllDataSplit);
+                    $endProcessSplit = array_values(array_filter($processSplit));
+                    //if symbol matched and data have
+                    if (count($endProcessSplit) > 0) {
+//                                print_r($endProcessSplit);
+                        $spreadsheet2->createSheet();
+                        $j = 0;
+                        for ($i = 0; $i < count($endProcessSplit); $i++) {
+                            $j++;
+                            $spreadsheet2->setActiveSheetIndex(0)->setCellValue("A" . $j, trim($endProcessSplit[$i][0]));
+                            $spreadsheet2->setActiveSheetIndex(1)->setCellValue("A" . $j, trim($endProcessSplit[$i][1]));
+                        }
+                        $writer = IOFactory::createWriter($spreadsheet2, "Xlsx");
+                        $writer->save("xlsx/create.xlsx");
                     }
-                    //if user not put any symbol then take 'space' default
+                    //if symbol did not match and data nill
                     else {
-                        //here available split 'space'............
+                        echo strtoupper($arrUserCol[0]) . " column have not that symbol" . $GLOBALS["splitSymbol"] . "symbolSplit";
                     }
                 }
                 else {//empty column
