@@ -85,6 +85,8 @@
                 success: function (data) {
                     console.log(data);
                     //in bellow where put red mark for wronged,all first add right
+                    $("#addSecondCol").css({"border-color": "#CED4DA"});
+                    $("#splitFirstCol").css({"border-color": "#CED4DA"});
                     $("#addThirdCol").css({"border-color": "#CED4DA"});
                     $("#addFirstCol").css({"border-color": "#CED4DA"});
 
@@ -94,8 +96,12 @@
                     if (patt.test(data)) {
                         $(".errProcess").text(data).css({"color": "red"});
                         return false;
-                    } else if (data.match(/split/g) !== null) {
-                        $(".errSplitCol").text(data).css({"color": "red"});
+                    } else if (data.includes("addSymbol")) {
+                        $("#addSecondCol").css({"border-color": "red"});
+                        $(".errAddCol").text(data.replace("addSymbol", "")).css({"color": "red"});
+                    } else if (data.includes("splitCol")) {
+                        $("#splitFirstCol").css({"border-color": "red"});
+                        $(".errSplitCol").text(data.replace("splitCol", "")).css({"color": "red"});
                         return false;
                     } else if (data.includes("symbolSplit")) {
                         //replace 'symbolSplit' string and return less string
@@ -114,11 +120,13 @@
                         return false;
                     } else {
                         //success
+                        $("#addSecondCol").css({"border-color": "#CED4DA"});
                         $("#addThirdCol").css({"border-color": "#CED4DA"});
                         $("#addFirstCol").css({"border-color": "#CED4DA"});
                         $("#splitSecondCol").css({"border-color": "#CED4DA"});
                         $(".errProcess").fadeOut();
                         $(".errSplitCol").text("eg: one column name ").css({"color": "black"});
+                        $(".errAddCol").text("eg: two column name").css({"color": "black"});
                         return true;
                     }
                 }
