@@ -115,7 +115,7 @@ if (isset($_POST) && !empty($_POST)) {
                             $spreadsheet2->setActiveSheetIndex(1)->setCellValue("A" . $j, trim($endProcessSplit[$i][1]));
                         }
                         $writer = IOFactory::createWriter($spreadsheet2, "Xlsx");
-                        $writer->save("xlsx/create.xlsx");
+                        $writer->save("xlsx/split.xlsx");
                     }
                     //if symbol did not match and data nill
                     else {
@@ -131,7 +131,24 @@ if (isset($_POST) && !empty($_POST)) {
                 }
             }
             if ($splitAdd === "add") {
-                
+               //here Add work..................
+               $firstCol=$filter->arrColRowAdd["firstCol"];
+               $thirdCol=$filter->arrColRowAdd["secondCol"];
+               
+               $array_unique= array_unique($filter->dataCol);
+               $array_reduce= array_reduce($array_unique, function($v1,$v2){
+                   return $v1."-".$v2;
+               });
+               
+               if(count($firstCol)<1){
+                   echo "column- ". strtoupper($_POST["addFirstCol"])." have no data,only ". ltrim($array_reduce, "-")." data!addCol1";
+                   return FALSE;
+               }
+               if(count($thirdCol)<1){
+                   echo "column- ". strtoupper($_POST["addThirdCol"])." have no data,only ". ltrim($array_reduce, "-")." data!addCol2";
+                   return FALSE;
+               }
+               echo "wrong!";
             }
         }
         else {

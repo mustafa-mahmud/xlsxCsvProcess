@@ -26,8 +26,8 @@
                     $(".errFile").text("eg: please choose .xlsx type file").css({"color": "red"});
                 } else {//if .xlsx file is choosen
                     $(".errFile").text("eg: only .xlsx file allowed").css({"color": "black"});
-                    var splitVisible = $(".split:visible");//if visible then length 1 or length 0
-                    var addVisible = $(".add:visible");//if visible then length 1 or length 0
+                    var splitVisible = $(".split:visible"); //if visible then length 1 or length 0
+                    var addVisible = $(".add:visible"); //if visible then length 1 or length 0
                     if (splitVisible.length > 0) {// .split visible
                         $(".errSelect").text("eg: select must any one plan").css({"color": "black"});
                         var splitFirstCol = $("#splitFirstCol").val();
@@ -84,6 +84,10 @@
                 },
                 success: function (data) {
                     console.log(data);
+                    //in bellow where put red mark for wronged,all first add right
+                    $("#addThirdCol").css({"border-color": "#CED4DA"});
+                    $("#addFirstCol").css({"border-color": "#CED4DA"});
+
                     $(".waiting").removeClass("fas fa-spinner fa-pulse");
                     $(".save").removeClass("cursorPrevent");
                     let patt = /eg: sorry someting went wrong !/;
@@ -95,14 +99,26 @@
                         return false;
                     } else if (data.includes("symbolSplit")) {
                         //replace 'symbolSplit' string and return less string
-                        $("#splitSecondCol").css({"border-color":"red"});
-                        $(".errSplitCol").text(data.replace("symbolSplit","")).css({"color":"red"});
+                        $("#splitSecondCol").css({"border-color": "red"});
+                        $(".errSplitCol").text(data.replace("symbolSplit", "")).css({"color": "red"});
+                        return false;
+                    } else if (data.includes("addCol1")) {
+                        //add coumn first have no data
+                        $("#addFirstCol").css({"border-color": "red"});
+                        $(".errAddCol").text(data.replace("addCol1", "")).css({"color": "red"});
+                        return false;
+                    } else if (data.includes("addCol2")) {
+                        //add coumn third have no data
+                        $("#addThirdCol").css({"border-color": "red"});
+                        $(".errAddCol").text(data.replace("addCol1", "")).css({"color": "red"});
                         return false;
                     } else {
                         //success
-                        $("#splitSecondCol").css({"border-color":"#CED4DA"});
+                        $("#addThirdCol").css({"border-color": "#CED4DA"});
+                        $("#addFirstCol").css({"border-color": "#CED4DA"});
+                        $("#splitSecondCol").css({"border-color": "#CED4DA"});
                         $(".errProcess").fadeOut();
-                        $(".errSplitCol").text("eg: one column name ").css({"color":"black"});
+                        $(".errSplitCol").text("eg: one column name ").css({"color": "black"});
                         return true;
                     }
                 }
