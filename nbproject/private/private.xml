@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/view/object/object.php</file>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/view/object/css/style.css</file>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/src/model/wordProcessClass.php</file>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/view/object/index.php</file>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/composer.json</file>
-            <file>file:/C:/xampp/htdocs/xlsxCsvProcess/view/object/js/xlsxCsvProcess.js</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
